@@ -14,7 +14,7 @@ services:
       - app-network
 
   backend:
-    image: backend:latest
+    image: danbalanean/backend:latest
     # build:
     #   context: ./backend
     environment:
