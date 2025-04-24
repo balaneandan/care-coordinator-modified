@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  nginx:
+    # build:
+    #   context: ./nginx
+    image: danbalanean/nginx:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    image: backend:latest
+    # build:
+    #   context: ./backend
+    environment:
+      DB__ID: dev-caredb
+      DB__PROJECT_ID: dev-care
+      DB__API_KEY: standard_38ee1bf2f0992c0960d17b4558c334c4e140043559354f13940acab2753d513a081c24be7684e01a3c70c24a4fa0033ffe661d47b2c2be7d6aeab81193914940bfffa55263022c751a66fb42a3d37ac0a517faafb25ca2a6065ab4e4ed892be4f8e6c9988da0cd8dd2707e835f532d29b681071f7dafc6a91274a760410cad8f
+      DB__PATIENT_COLLECTION_ID: dev-patient
+      DB__DOCTOR_COLLECTION_ID: dev-doctor
+      DB__APPOINTMENT_COLLECTION_ID: dev-appointment
+      DB__BUCKET_ID: dev-bucket
+      DB__ENDPOINT_URL: https://cloud.appwrite.io/v1
+    expose:
+      - "8000"
+    networks:
+      - app-network
+
+  frontend:
+    image: danbalanean/frontend:latest
+    # build:
+    #   context: ./frontend
+    environment:
+      NEXT_PUBLIC_FASTAPI_CONNECTION_URL: "http://backend:8000"
+      NEXT_PUBLIC_ENDPOINT_URL: 'https://test-camunda2-a5g0gzgbc7aae2a8.northeurope-01.azurewebsites.net/api'
+      NEXT_PUBLIC_ADMIN_PASSKEY: "000000"
+    expose:
+      - "3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,0 +1,11 @@
+@tailwind utilities;
+
+@layer utilities {
+  .container {
+    @apply relative flex-1 overflow-y-auto px-[5%];
+  }
+
+  .sub-container {
+    @apply mx-auto flex size-full flex-col py-10;
+  }
+}
