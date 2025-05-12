@@ -6,6 +6,7 @@ export enum FormFieldType {
   DATE_PICKER = "datePicker",
   SELECT = "select",
   CUSTOM = "custom",
+  PASSWORD = "password",
 }
 
 export enum Status {

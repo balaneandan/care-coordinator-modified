@@ -8,6 +8,7 @@ import SubmitButton from "@/components/SubmitButton";
 import { Form } from "@/components/ui/form";
 import { SelectItem } from "@/components/ui/select";
 import { useProjectStore } from "@/hooks/useProjectStore";
+import { getAuthHeaders } from "@/hooks/useStorage";
 import {
   AppointmentFormDefaults,
   AppointmentTypeDetails,
@@ -57,7 +58,7 @@ const CreateAppointmentForm = ({ userId, patientId }: AppointmentFormProps) => {
     setIsLoading(true);
     try {
       const details = AppointmentTypeDetails.find((item) => item.type === type);
-
+      console.log('aaaa')
       if (details && patientId) {
         const appointmentData: CreateAppointmentParams = {
           userId,
@@ -72,9 +73,9 @@ const CreateAppointmentForm = ({ userId, patientId }: AppointmentFormProps) => {
         };
 
         const { appointmentId, appointmentError } = await addAppointment(
-          appointmentData
+          appointmentData, getAuthHeaders()
         );
-
+       
         if (appointmentId) {
           router.push(
             `/patients/${userId}/new-appointment/success?patientId=${patientId}&appointmentId=${appointmentId.id}`
@@ -86,7 +87,6 @@ const CreateAppointmentForm = ({ userId, patientId }: AppointmentFormProps) => {
         }
       }
     } catch (error: any) {
-      console.log(error);
       setFormData(formValues);
       setIsLoading(false);
       setError({

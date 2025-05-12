@@ -17,6 +17,9 @@ class DatabaseConfig(BaseModel):
     APPOINTMENT_COLLECTION_ID: str
     BUCKET_ID: str
     ENDPOINT_URL: str
+    TEST_USER_EMAIL: str
+    TEST_OTP_CODE: str
+    TEST_MODE: bool
 
 
 class Settings(BaseSettings):
@@ -25,7 +28,7 @@ class Settings(BaseSettings):
     DB: DatabaseConfig
 
     model_config = SettingsConfigDict(
-        #env_file=".env.backend",
+        env_file=".env.backend",
         env_nested_delimiter="__",
     )
 

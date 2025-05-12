@@ -12,8 +12,9 @@ from appwrite.role import Role
 from appwrite.input_file import InputFile
 
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from ...auth import get_current_user
 
-router = APIRouter(prefix="/patient", tags=["Patients"])
+router = APIRouter(prefix="/patient", tags=["Patients"], dependencies=[Depends(get_current_user)])
 
 
 @router.post(

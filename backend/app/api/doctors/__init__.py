@@ -9,8 +9,9 @@ from .response import DoctorListResponse, GetDoctorResponse
 from appwrite.exception import AppwriteException
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from ...auth import get_current_user
 
-router = APIRouter(prefix="/doctor", tags=["Doctors"])
+router = APIRouter(prefix="/doctor", tags=["Doctors"], dependencies=[Depends(get_current_user)])
 
 
 @router.get(

@@ -82,6 +82,28 @@ const RenderField = ({ field, props }: { field: any; props: FormProps }) => {
           </FormControl>
         </div>
       );
+    case FormFieldType.PASSWORD:
+      return (
+        <div className="flex rounded-md border border-dark-500 bg-dark-400">
+          {iconSrc && (
+            <Image
+              src={iconSrc}
+              height={24}
+              width={24}
+              alt={iconAlt || "icon"}
+              className="ml-2"
+            />
+          )}
+          <FormControl>
+            <Input
+              placeholder={placeholder}
+              {...field}
+              type={"password"}
+              className="shad-input border-0"
+            />
+          </FormControl>
+        </div>
+      );
     case FormFieldType.TEXTAREA:
       return (
         <FormControl>

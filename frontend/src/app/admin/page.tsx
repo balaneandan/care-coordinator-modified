@@ -6,6 +6,7 @@ import StatCard from "@/components/StatCard";
 import { AppointmentTable } from "@/components/appointments";
 
 import { useProjectStore } from "@/hooks/useProjectStore";
+import { getAuthHeaders } from "@/hooks/useStorage";
 import { AppointmentListData } from "@/types/api";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,7 +26,7 @@ const Admin = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { appointments } = await getAppointments();
+      const { appointments } = await getAppointments(getAuthHeaders());
       setAppointments(appointments);
 
       if (appointments) {
@@ -44,9 +45,9 @@ const Admin = () => {
 
     const fetchData = async () => {
       setIsLoading(true);
-      const { appointments } = await getAppointments();
+      const { appointments } = await getAppointments(getAuthHeaders());
       setAppointments(appointments);
-
+      setIsLoading(false);
       if (appointments) {
         setIsLoading(false);
       }

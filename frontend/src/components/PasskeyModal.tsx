@@ -1,5 +1,6 @@
 "use client";
 
+import { loginAdmin, verifyOTP } from "@/actions/user.actions";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,6 +18,7 @@ import {
 } from "@/components/ui/input-otp";
 import { useLocalStorage } from "@/hooks/useStorage";
 import { decryptKey, encryptKey } from "@/lib/utils";
+import { VerifyOTP } from "@/types/api";
 
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -26,7 +28,7 @@ import { useEffect, useState } from "react";
 const PasskeyModal = () => {
   const router = useRouter();
   const path = usePathname();
-
+  const [token, setToken] = useLocalStorage("access_token", "");
   const [open, setOpen] = useState(false);
   const [passkey, setPasskey] = useState("");
   const [passkeyError, setPasskeyError] = useState("");
@@ -37,13 +39,21 @@ const PasskeyModal = () => {
 
   const encryptedKey = typeof window !== "undefined" ? accessKey : null;
 
+  const verifyCode = async (key: string) => {
+    const response = await loginAdmin(key);
+    if (response.msg.access_token) {
+      setToken(response.msg.access_token);
+      setOpen(false);
+      router.push("/admin");
+    }
+  }
+
   useEffect(() => {
-    const key = encryptedKey && decryptKey(encryptedKey);
+    const key = encryptedKey ? decryptKey(encryptedKey) : "";
 
     if (path) {
       if (key === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
-        setOpen(false);
-        router.push("/admin");
+        verifyCode(key);
       } else {
         setOpen(true);
       }

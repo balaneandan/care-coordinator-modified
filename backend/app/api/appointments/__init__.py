@@ -31,9 +31,10 @@ from appwrite.role import Role
 from appwrite.query import Query
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from ...auth import get_current_user
 
 
-router = APIRouter(prefix="/appointment", tags=["Appointments"])
+router = APIRouter(prefix="/appointment", tags=["Appointments"], dependencies=[Depends(get_current_user)])
 
 
 @router.post(

@@ -1,3 +1,4 @@
+import { getAuthHeaders } from "@/hooks/useStorage";
 import FetchClient from "@/lib/fetch-client";
 import { ErrorMsg } from "@/types/api";
 import { Doctor } from "@/types/common";
@@ -15,7 +16,7 @@ export type DoctorStore = {
   fetchDoctor: (id: string) => Promise<void>;
 };
 
-const fetch = new FetchClient(undefined, "/doctor");
+const fetch = new FetchClient(undefined, "/doctor",);
 
 const APIAction = <T, Params = void>(
   apiCall: (
@@ -35,14 +36,15 @@ const APIAction = <T, Params = void>(
   };
 };
 
+
 export const createDoctorStore: StateCreator<DoctorStore> = (set) => ({
   doctors: null,
   doctor: null,
   doctorsLoading: true,
   doctorError: null,
-  fetchDoctors: APIAction(() => fetch.get<Doctor[]>("/list"), set, "doctors"),
+  fetchDoctors: APIAction(() => fetch.get<Doctor[]>("/list", getAuthHeaders()), set, "doctors"),
   fetchDoctor: APIAction(
-    (id: string) => fetch.get<Doctor>(`/${id}`),
+    (id: string) => fetch.get<Doctor>(`/${id}`, getAuthHeaders()),
     set,
     "doctor"
   ),

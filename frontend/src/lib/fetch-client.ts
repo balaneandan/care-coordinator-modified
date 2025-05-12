@@ -92,6 +92,7 @@ class FetchClient {
     let error: ErrorMsg | null = null;
     let isLoading = true;
 
+
     try {
       const isFormData = apiData instanceof FormData ? true : false;
       const config: RequestInit = {

@@ -20,6 +20,17 @@ export const UserFormValidation = z.object({
     ),
 });
 
+export const SignInFormValidation = z.object({
+  email: z.string().email("Invalid email address."),
+  password: z
+    .string()
+    .min(4, {
+      message: "Password must be at least 4 characters.",
+    })
+    .max(50, "Password cannot exceed 50 characters."),
+});
+
+
 export const RegistrationFormValidation = z.object({
   name: z
     .string()

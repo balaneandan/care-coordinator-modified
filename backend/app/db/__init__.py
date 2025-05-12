@@ -6,7 +6,6 @@ from appwrite.services.databases import Databases
 from appwrite.services.storage import Storage
 from appwrite.services.messaging import Messaging
 from appwrite.services.users import Users
-
 from pydantic import BaseModel, ConfigDict
 
 
@@ -32,18 +31,17 @@ def init_db() -> DBConnections:
     storage = Storage(client)
     messaging = Messaging(client)
     users = Users(client)
-
+    
     return DBConnections(
         client=client,
         db=db,
         storage=storage,
         messaging=messaging,
-        users=users,
+        users=users
     )
 
 
 connect = init_db()
-
 
 def get_patient_db() -> CRUD:
     return CRUD(

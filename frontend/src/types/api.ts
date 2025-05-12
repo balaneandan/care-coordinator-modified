@@ -8,6 +8,17 @@ export type CreateUser = {
   phone: string;
 };
 
+export type SignInUser = {
+  email: string;
+  password: string;
+};
+
+export type VerifyOTP = {
+  challengeId: string;
+  otp: string;
+  session_token: string;
+}
+
 export type User = CreateUser & {
   userID: string;
 };
